@@ -7,7 +7,7 @@ setup(
     name="reportworm-builder",
     version="0.1",
     include_package_data=True,
-    python_requires='>=3.9',
+    python_requires='>=3.10',
     packages=find_packages(),
     setup_requires=['setuptools-git-versioning'],
     install_requires=requirements,
@@ -17,7 +17,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     classifiers=[
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "License :: BSD License",
         "Operating System :: OS Independent",
     ],
