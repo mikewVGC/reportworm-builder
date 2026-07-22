@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name="reportworm-builder",
-    version="1.0.4",
+    version="1.0.7",
     include_package_data=True,
     python_requires='>=3.10',
     packages=find_packages(),
