@@ -4,13 +4,14 @@ import os
 
 class BuilderCache():
 
-    def __init__(self, prod:bool = False) -> None:
+    def __init__(self, data_dir:str, prod:bool = False) -> None:
         self.meta_ssi = []
         self.data = {}
 
+        self.data_dir = data_dir
         self.prod = prod
 
-        os.makedirs("data/builder", exist_ok=True)
+        os.makedirs(self.data_dir, exist_ok=True)
 
 
     def add_meta_ssi(self, file:str, title:str, description:str) -> None:
@@ -38,7 +39,7 @@ class BuilderCache():
 
         indent = 0 if self.prod else 2
 
-        with open("data/builder/cache", 'w') as cachefile:
+        with open(f"{self.data_dir}/cache", 'w') as cachefile:
             cachefile.write(
                 json.dumps(cache_data, indent=indent)
             )
@@ -47,7 +48,7 @@ class BuilderCache():
     def load(self) -> dict:
         cache = {}
         try:
-            with open("data/builder/cache", 'r') as cachefile:
+            with open(f"{self.data_dir}/cache", 'r') as cachefile:
                 cache = json.loads(cachefile.read())
         except FileNotFoundError:
             print("[BuilderCache] No cache file was found")
