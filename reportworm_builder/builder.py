@@ -81,6 +81,8 @@ class Builder():
 
         if step_type == 'html':
             if 'tokens' in self.common['html']:
+                if 'tokens' not in step_data:
+                    step_data['tokens'] = []
                 step_data['tokens'] = [ *self.common['html']['tokens'], *step_data['tokens'] ]
 
             main_tpl = self.build_html(step_data)

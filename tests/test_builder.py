@@ -22,6 +22,23 @@ class TestBuilder(unittest.TestCase):
             "refs": {
                 "tpl": "tests/templates"
             },
+            "common": [
+                {
+                    "type": "html",
+                    "tokens": [
+                        {
+                            "token": "__TOKEN_FLAG_TEST__",
+                            "type": "flag",
+                            "name": "mode",
+                            "values": [
+                                { "value": "prod", "type": "tpl", "ref": "flag-prod" },
+                                { "value": "dev", "type": "tpl", "ref": "flag-dev" },
+                                { "value": "local", "type": "tpl", "ref": "flag-local" }
+                            ]
+                        },
+                    ],
+                },
+            ],
             "test_step": {
                 "type": "html",
                 "base-ref": "home",
