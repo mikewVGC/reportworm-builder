@@ -152,7 +152,9 @@ class Builder():
             if token_type == 'flag':
                 flag_val = self.flags[token_info['name']]
                 for opt in token_info['values']:
-                    if opt['value'] != flag_val:
+                    if 'value' in opt and opt['value'] != flag_val:
+                        continue
+                    elif 'values' in opt and flag_val not in opt['values']:
                         continue
 
                     token_type = opt['type']

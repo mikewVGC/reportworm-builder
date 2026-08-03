@@ -32,8 +32,7 @@ class TestBuilder(unittest.TestCase):
                             "name": "mode",
                             "values": [
                                 { "value": "prod", "type": "tpl", "ref": "flag-prod" },
-                                { "value": "dev", "type": "tpl", "ref": "flag-dev" },
-                                { "value": "local", "type": "tpl", "ref": "flag-local" }
+                                { "values": [ "dev", "local" ], "type": "tpl", "ref": "flag-dev" }
                             ]
                         },
                     ],
