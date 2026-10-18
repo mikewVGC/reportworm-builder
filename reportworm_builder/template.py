@@ -38,5 +38,7 @@ class Template():
         f_path = Path(self.dest)
         f_path.parent.mkdir(parents=True, exist_ok=True)
 
+        print(f"writing to {self.dest}")
+
         with open(self.dest, "w") as file:
             file.write(compiled)

@@ -35,6 +35,11 @@ class TestBuilder(unittest.TestCase):
                                 { "values": [ "dev", "local" ], "type": "tpl", "ref": "flag-dev" }
                             ]
                         },
+                        {
+                            "token": "__SITES_NAV_TEST__",
+                            "type": "sites_nav",
+                            "nav_type": "menu"
+                        },
                     ],
                 },
             ],
@@ -52,3 +57,15 @@ class TestBuilder(unittest.TestCase):
         builder = Builder({}, {})
 
         self.assertEqual(len(builder.steps), 1)
+
+
+    """
+    @patch("builtins.open", new_callable=mock_open, read_data=json.dumps(build_data))
+    def test_builder_builds(self, mock_file):
+
+        builder = Builder({}, {})
+
+        compiled = builder.steps[0].compile()
+
+        print(compiled)
+    """

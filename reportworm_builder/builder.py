@@ -182,6 +182,15 @@ class Builder():
             elif token_type == 'date':
                 if token_info['value'] == 'year':
                     replace_val = date.today().year
+            elif token_type == 'sites_nav':
+                sub_type = None
+                if 'nav_type' in token_info:
+                    sub_type = token_info['nav_type']
+
+                if sub_type == 'menu':
+                    replace_val = Template("assets/sites-nav-tpl.html").compile()
+                elif sub_type == 'bootstrap':
+                    replace_val = self._sites_nav_bootstrap()
             else:
                 raise KeyError(f"[Template] Unknown token type '{token_type}'")
 
@@ -219,6 +228,17 @@ class Builder():
 
         for src, dest in copy_ops.items():
             shutil.copy(src, dest)
+
+
+    def _sites_nav_bootstrap(self) -> str:
+        try:
+            with open("sites-nav.json") as file:
+                sites_nav = json.loads(file.read())
+                return json.dumps(sites_nav, separators=(',', ':'))
+        except FileNotFoundError:
+            print("Couldn't open sites-nav-source.json")
+
+        return ""
 
 
     def build_meta_ssi(self) -> None:
