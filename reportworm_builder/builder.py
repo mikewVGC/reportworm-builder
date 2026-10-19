@@ -195,7 +195,10 @@ class Builder():
                     with resources.as_file(tpl_ref) as asset_path:
                         replace_val = Template(asset_path).compile()
                 elif sub_type == 'bootstrap':
-                    replace_val = self._sites_nav_bootstrap()
+                    boot_ref = self.package_ref / "assets" / "sites-nav.json"
+                    with resources.as_file(boot_ref) as asset_path:
+                        active = token_info.get('active', '')
+                        replace_val = self._sites_nav_bootstrap(asset_path, active)
             else:
                 raise KeyError(f"[Template] Unknown token type '{token_type}'")
 
@@ -235,11 +238,13 @@ class Builder():
             shutil.copy(src, dest)
 
 
-    def _sites_nav_bootstrap(self) -> str:
+    def _sites_nav_bootstrap(self, bootstrap_asset_path, active_item) -> str:
         try:
-            with open("sites-nav.json") as file:
+            with open(bootstrap_asset_path) as file:
                 sites_nav = json.loads(file.read())
-                return json.dumps(sites_nav, separators=(',', ':'))
+                if active_item in sites_nav:
+                    sites_nav[active_item]['active'] = True
+                return json.dumps(list(sites_nav.values()), separators=(',', ':'))
         except FileNotFoundError:
             print("Couldn't open sites-nav-source.json")
 

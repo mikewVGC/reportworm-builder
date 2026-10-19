@@ -42,6 +42,11 @@ class TestBuilder(unittest.TestCase):
                             "type": "sites_nav",
                             "nav_type": "menu"
                         },
+                        {
+                            "token": "__SITES_NAV_BOOTSTRAP_TEST__",
+                            "type": "sites_nav",
+                            "nav_type": "bootstrap"
+                        },
                     ],
                 },
             ],
@@ -69,6 +74,7 @@ class TestBuilder(unittest.TestCase):
             mock.mock_open(read_data=json.dumps(self.build_data)),
             self.real_open,
             self.real_open,
+            self.real_open,
         ])
 
         mock_file.side_effect = lambda *args, **kwargs: next(side_effects)(*args, **kwargs)
@@ -78,3 +84,4 @@ class TestBuilder(unittest.TestCase):
         compiled = builder.steps[0].compile()
 
         assert('<nav id="sites-nav">' in compiled)
+        assert('"name":"Reportworm Hub"' in compiled)
