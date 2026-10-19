@@ -1,5 +1,7 @@
 
+import builtins
 import unittest
+from unittest import mock
 from unittest.mock import patch, mock_open
 
 import json
@@ -51,21 +53,28 @@ class TestBuilder(unittest.TestCase):
         },
     }
 
+    real_open = builtins.open
+
+
     @patch("builtins.open", new_callable=mock_open, read_data=json.dumps(build_data))
     def test_init_creates_steps(self, mock_file):
-
         builder = Builder({}, {})
-
         self.assertEqual(len(builder.steps), 1)
 
 
-    """
-    @patch("builtins.open", new_callable=mock_open, read_data=json.dumps(build_data))
+    @patch("builtins.open")
     def test_builder_builds(self, mock_file):
+        side_effects = iter([
+            mock.mock_open(read_data=json.dumps(self.build_data)),
+            mock.mock_open(read_data=json.dumps(self.build_data)),
+            self.real_open,
+            self.real_open,
+        ])
+
+        mock_file.side_effect = lambda *args, **kwargs: next(side_effects)(*args, **kwargs)
 
         builder = Builder({}, {})
 
         compiled = builder.steps[0].compile()
 
-        print(compiled)
-    """
+        assert('<nav id="sites-nav">' in compiled)

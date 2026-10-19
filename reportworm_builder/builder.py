@@ -7,6 +7,7 @@ import shutil
 import subprocess
 
 from datetime import date
+from importlib import resources
 from pathlib import Path
 
 from reportworm_builder.template import Template
@@ -26,6 +27,8 @@ class Builder():
         self.common = {
             'html': {}
         }
+
+        self.package_ref = resources.files('reportworm_builder')
 
         build_config = {}
 
@@ -188,7 +191,9 @@ class Builder():
                     sub_type = token_info['nav_type']
 
                 if sub_type == 'menu':
-                    replace_val = Template("assets/sites-nav-tpl.html").compile()
+                    tpl_ref = self.package_ref / "assets" / "sites-nav-tpl.html"
+                    with resources.as_file(tpl_ref) as asset_path:
+                        replace_val = Template(asset_path).compile()
                 elif sub_type == 'bootstrap':
                     replace_val = self._sites_nav_bootstrap()
             else:
