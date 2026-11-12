@@ -54,11 +54,6 @@ class Builder():
                 ref_name = item.split('.')[0]
                 self.refs[ref][ref_name] = f"{dir_name}/{item}"
 
-            if ref == "css":
-                css_ref = self.package_ref / "assets" / "sites-nav.css"
-                with resources.as_file(css_ref) as asset_path:
-                    shutil.copy(css_ref, f"{dir_name}/sites-nav.css")
-
         if 'vars' in build_config:
             for var_name, var_val in build_config['vars'].items():
                 self.vars[var_name] = var_val
@@ -200,7 +195,11 @@ class Builder():
                     with resources.as_file(tpl_ref) as asset_path:
                         replace_val = Template(asset_path).compile()
                 elif sub_type == 'stylesheet':
-                    replace_val = '/static/sites-nav.css'
+                    css_ref = self.package_ref / "assets" / "sites-nav.min.css"
+                    with resources.as_file(css_ref) as asset_path:
+                        shutil.copy(css_ref, f"public/static/sites-nav.min.css")
+
+                    replace_val = '/static/sites-nav.min.css'
                 elif sub_type == 'bootstrap':
                     boot_ref = self.package_ref / "assets" / "sites-nav.json"
                     with resources.as_file(boot_ref) as asset_path:
@@ -253,7 +252,7 @@ class Builder():
                     sites_nav[active_item]['active'] = True
                 return json.dumps(list(sites_nav.values()), separators=(',', ':'))
         except FileNotFoundError:
-            print("Couldn't open sites-nav-source.json")
+            print(f"Couldn't open {bootstrap_asset_path}")
 
         return ""
 
