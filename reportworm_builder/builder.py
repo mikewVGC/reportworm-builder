@@ -54,6 +54,11 @@ class Builder():
                 ref_name = item.split('.')[0]
                 self.refs[ref][ref_name] = f"{dir_name}/{item}"
 
+            if ref == "css":
+                css_ref = self.package_ref / "assets" / "sites-nav.css"
+                with resources.as_file(css_ref) as asset_path:
+                    shutil.copy(css_ref, f"{dir_name}/sites-nav.css")
+
         if 'vars' in build_config:
             for var_name, var_val in build_config['vars'].items():
                 self.vars[var_name] = var_val
@@ -194,6 +199,8 @@ class Builder():
                     tpl_ref = self.package_ref / "assets" / "sites-nav-tpl.html"
                     with resources.as_file(tpl_ref) as asset_path:
                         replace_val = Template(asset_path).compile()
+                elif sub_type == 'stylesheet':
+                    replace_val = '/static/sites-nav.css'
                 elif sub_type == 'bootstrap':
                     boot_ref = self.package_ref / "assets" / "sites-nav.json"
                     with resources.as_file(boot_ref) as asset_path:

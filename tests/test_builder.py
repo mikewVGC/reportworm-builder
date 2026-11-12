@@ -83,5 +83,5 @@ class TestBuilder(unittest.TestCase):
 
         compiled = builder.steps[0].compile()
 
-        assert('<nav id="sites-nav">' in compiled)
-        assert('"name":"Reportworm Hub"' in compiled)
+        assert('<nav id="sites-nav" v-cloak>' in compiled)
+        assert('"name":"Hub"' in compiled)

@@ -1,10 +1,11 @@
 {
     "reportworm-hub": {
-        "name": "Reportworm Hub",
-        "url": "https://reportworm.com/"
+        "name": "Hub",
+        "url": "https://reportworm.com/",
+        "class": "nav-hub"
     },
     "reportworm-standings": {
-        "name": "Event Standings",
+        "name": "Standings",
         "url": "https://standings.reportworm.com/"
     },
     "reportworm-champs": {
@@ -12,7 +13,7 @@
         "url": "https://champs.reportworm.com/"
     },
     "reportworm-meta": {
-        "name": "The Metagame",
+        "name": "Metagame",
         "url": "https://meta.reportworm.com/"
     }
 }
