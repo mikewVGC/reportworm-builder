@@ -119,4 +119,8 @@ nav#sites-nav div.active a {
         border-top: 0;
         border-bottom: 0;
     }
+
+    .menu-icon span {
+        background-color: #FFF;
+    }
 }
