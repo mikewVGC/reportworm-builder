@@ -196,10 +196,12 @@ class Builder():
                         replace_val = Template(asset_path).compile()
                 elif sub_type == 'stylesheet':
                     css_ref = self.package_ref / "assets" / "sites-nav.min.css"
+                    file_time = ''
                     with resources.as_file(css_ref) as asset_path:
                         shutil.copy(css_ref, f"public/static/sites-nav.min.css")
-
-                    replace_val = '/static/sites-nav.min.css'
+                        file_time = asset_path.stat().st_mtime
+                    
+                    replace_val = f"/static/sites-nav.min.css?{file_time}"
                 elif sub_type == 'bootstrap':
                     boot_ref = self.package_ref / "assets" / "sites-nav.json"
                     with resources.as_file(boot_ref) as asset_path:
