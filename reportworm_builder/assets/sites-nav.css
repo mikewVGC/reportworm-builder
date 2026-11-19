@@ -37,6 +37,14 @@ nav#sites-nav div.active a {
     text-decoration: none;
 }
 
+#menu-toggle {
+    display: none;
+}
+
+.menu-icon {
+    display: none;
+}
+
 @media (max-width: 40.5em) {
     nav#sites-nav {
         margin: .5em;
@@ -58,6 +66,38 @@ nav#sites-nav div.active a {
         border: 0;
         border-top: 1px solid #000000;
         border-bottom: 1px solid #000000;
+    }
+
+    .menu-icon {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        width: 22px;
+    }
+
+    .menu-icon span {
+        height: 3.5px;
+        width: 100%;
+        background-color: #333;
+        border-radius: 2px;
+        transition: 0.3s;
+    }
+
+    #menu-toggle:checked ~ .nav-items {
+        display: block;
+    }
+
+    #menu-toggle:checked + .menu-icon span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 5px);
+    }
+
+    #menu-toggle:checked + .menu-icon span:nth-child(2) {
+      opacity: 0;
+    }
+
+    #menu-toggle:checked + .menu-icon span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -5px);
     }
 }
 
